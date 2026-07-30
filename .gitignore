@@ -1,0 +1,10 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Internal planning notes, not for public repo
+PLAN.md
+
+# Editor/tooling folders not relevant to the public project
+.vscode/
+.specstory/

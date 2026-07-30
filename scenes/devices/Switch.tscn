@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/devices/DeviceBase.tscn" id="1"]
+
+[node name="Switch" instance=ExtResource("1")]
+icon_color = Color(0.2, 0.4, 0.9, 1)
+border_color = Color(0.1, 0.22, 0.5, 1)
+border_width = 2.0
+icon_size = Vector2(100, 36)
+default_type = "switch"

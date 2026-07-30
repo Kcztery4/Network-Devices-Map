@@ -1,0 +1,37 @@
+keys,en,pl
+LOAD_MAP_BUTTON,Load Map (PNG/SVG),Wczytaj mapę (PNG/SVG)
+ADD_SWITCH_BUTTON,Add Switch,Dodaj Switch
+ADD_RACK_BUTTON,Add Rack,Dodaj Rack
+ADD_AP_BUTTON,Add AP,Dodaj AP
+UPLINK_MODE_BUTTON,Mode: Uplink,Tryb: Uplink
+SAVE_PROJECT_BUTTON,Save Project,Zapisz projekt
+LOAD_PROJECT_BUTTON,Load Project,Wczytaj projekt
+EXPORT_PNG_BUTTON,Export PNG,Eksportuj PNG
+SETTINGS_BUTTON,Settings,Ustawienia
+NAME_LABEL,Name,Nazwa
+SCALE_LABEL,Scale,Skala
+LOCK_CHECK,Locked,Zablokowane
+SLOT_LABEL,Slot count,Liczba slotów
+CABLE_TYPE_LABEL,Cable type,Typ kabla
+BIDIRECTIONAL_CHECK,Bidirectional,Dwukierunkowy
+DELETE_BUTTON,Delete,Usuń
+LOAD_MAP_DIALOG_TITLE,Load Map,Wczytaj mapę
+SAVE_PROJECT_DIALOG_TITLE,Save Project,Zapisz projekt
+LOAD_PROJECT_DIALOG_TITLE,Load Project,Wczytaj projekt
+EXPORT_PNG_DIALOG_TITLE,Export to PNG,Eksportuj do PNG
+ERR_LOAD_MAP,Failed to load map: %s (error %d),Nie udało się wczytać mapy: %s (błąd %d)
+ERR_SAVE_PROJECT,Failed to save project: %s (error %d),Nie udało się zapisać projektu: %s (błąd %d)
+ERR_LOAD_PROJECT,Failed to load project: %s,Nie udało się wczytać projektu: %s
+ERR_NO_MAP_EXPORT,No map loaded — cannot export.,Brak wczytanej mapy — nie można eksportować.
+ERR_SAVE_PNG,Failed to save PNG: %s (error %d),Nie udało się zapisać PNG: %s (błąd %d)
+CABLE_COPPER,Copper,Miedziany
+CABLE_FIBER_1G,Fiber 1G,Światłowód 1G
+CABLE_FIBER_10G,Fiber 10G,Światłowód 10G
+SETTINGS_TITLE,Settings,Ustawienia
+SETTINGS_LANGUAGE,Language,Język
+SETTINGS_RESOLUTION,Resolution,Rozdzielczość
+SETTINGS_VERSION_FORMAT,Version: %s,Wersja: %s
+SETTINGS_CLOSE,Close,Zamknij
+ERR_UPLINK_EXISTS,A connection between these devices already exists.,Połączenie między tymi urządzeniami już istnieje.
+CONFIRM_DISCARD_TITLE,Unsaved changes,Niezapisane zmiany
+CONFIRM_DISCARD_CHANGES,You have unsaved changes. Loading another project will discard them. Continue?,Masz niezapisane zmiany. Wczytanie innego projektu je odrzuci. Kontynuować?

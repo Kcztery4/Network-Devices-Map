@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/devices/DeviceBase.tscn" id="1"]
+
+[node name="Rack" instance=ExtResource("1")]
+icon_color = Color(0.35, 0.35, 0.4, 1)
+border_color = Color(0.18, 0.18, 0.22, 1)
+border_width = 2.0
+icon_size = Vector2(140, 240)
+name_position = 1
+show_separator = true
+slot_count = 5
+slot_unit_height = 42.0
+default_type = "rack"

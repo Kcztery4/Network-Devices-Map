@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/devices/DeviceBase.tscn" id="1"]
+
+[node name="AccessPoint" instance=ExtResource("1")]
+icon_color = Color(0.93, 0.84, 0.45, 1)
+border_color = Color(0.75, 0.15, 0.15, 1)
+border_width = 3.0
+icon_size = Vector2(50, 50)
+shape_type = 1
+default_type = "access_point"
