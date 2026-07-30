@@ -1,34 +1,38 @@
 # Network Devices Map
 
-Samodzielna aplikacja (Godot 4.5) do wizualizacji sieci na mapie: nakładanie
-urządzeń sieciowych (Rack, Switch, Access Point) na podkład mapy (PNG/SVG),
-rysowanie połączeń uplink między nimi oraz zapis/wczytanie projektu i eksport
-widoku do PNG.
+A standalone application (Godot 4.5) for visualizing a network on a map:
+placing network devices (Rack, Switch, Access Point) on a map background
+(PNG/SVG), drawing uplink connections between them, saving/loading the
+project, and exporting the view to PNG.
 
-## Funkcje
+## Features
 
-- Wczytanie podkładu mapy (PNG lub SVG)
-- Dodawanie urządzeń: Rack, Switch, Access Point
-- Dokowanie Switchy do Racków (przeciągnij i upuść)
-- Rysowanie strzałek uplink (Copper / Fiber 1G / Fiber 10G) między urządzeniami
-- Nazywanie i skalowanie obiektów
-- Zapis/wczytanie projektu (Godot `Resource`/`.tres`)
-- Eksport widoku mapy do PNG
+- Load a map background (PNG or SVG)
+- Add devices: Rack, Switch, Access Point
+- Dock Switches into Racks (drag and drop)
+- Draw uplink arrows (Copper / Fiber 1G / Fiber 10G) between devices
+- Name and scale objects
+- Save/load the project (Godot `Resource`/`.tres`)
+- Export the map view to PNG
 
-## Wymagania
+## Requirements
 
 - [Godot Engine 4.5](https://godotengine.org/)
 
-## Uruchomienie
+## Running from source
 
-1. Otwórz folder projektu w Godot Engine (`project.godot`).
-2. Uruchom scenę główną (`F5`) lub zbuduj `.exe` przez Project → Export.
+1. Open the project folder in Godot Engine (`project.godot`).
+2. Run the main scene (`F5`) or build an `.exe` via Project → Export.
+
+## Downloads
+
+Pre-built Windows releases are available on the
+[Releases](https://github.com/Kcztery4/Network-Devices-Map/releases) page.
 
 ## Status
 
-Projekt w aktywnym rozwoju, etapami — patrz historia commitów.
+Actively developed, in stages — see commit history.
 
-## Licencja
+## License
 
-Brak jawnej licencji na razie — wszelkie prawa zastrzeżone, chyba że autor
-zdecyduje inaczej.
+No explicit license yet — all rights reserved unless stated otherwise.
