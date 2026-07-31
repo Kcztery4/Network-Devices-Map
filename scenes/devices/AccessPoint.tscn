@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/devices/DeviceBase.tscn" id="1"]
+[ext_resource type="Script" path="res://scripts/devices/access_point.gd" id="2"]
 
 [node name="AccessPoint" instance=ExtResource("1")]
+script = ExtResource("2")
 icon_color = Color(0.93, 0.84, 0.45, 1)
 border_color = Color(0.75, 0.15, 0.15, 1)
 border_width = 3.0

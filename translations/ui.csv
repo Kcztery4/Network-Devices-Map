@@ -11,6 +11,14 @@ SETTINGS_BUTTON,Settings,Ustawienia
 NAME_LABEL,Name,Nazwa
 SCALE_LABEL,Scale,Skala
 LOCK_CHECK,Locked,Zablokowane
+LOCATION_LABEL,Location,Lokalizacja
+LOCATION_HALL,Hall,Hala
+LOCATION_OFFICE,In office,Jest w biurze
+LOCATION_OUTDOOR,Outdoor,Na zewnątrz
+UPPER_FLOOR_CHECK,On upper floor,Na piętrze
+LOWER_FLOOR_CHECK,In basement,W piwnicy
+ANTENNA_CHECK,Directional antenna,Antena kierunkowa
+ANTENNA_DIRECTION_LABEL,Antenna direction (°),Kierunek anteny (°)
 SLOT_LABEL,Slot count,Liczba slotów
 CABLE_TYPE_LABEL,Cable type,Typ kabla
 BIDIRECTIONAL_CHECK,Bidirectional,Dwukierunkowy

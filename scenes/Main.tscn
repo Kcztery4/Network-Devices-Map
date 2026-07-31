@@ -123,6 +123,36 @@ value = 1.0
 layout_mode = 2
 text = "LOCK_CHECK"
 
+[node name="LocationLabel" type="Label" parent="Root/Body/Inspector/InspectorBox/DeviceFields"]
+layout_mode = 2
+text = "LOCATION_LABEL"
+
+[node name="LocationOption" type="OptionButton" parent="Root/Body/Inspector/InspectorBox/DeviceFields"]
+layout_mode = 2
+
+[node name="UpperFloorCheck" type="CheckBox" parent="Root/Body/Inspector/InspectorBox/DeviceFields"]
+layout_mode = 2
+text = "UPPER_FLOOR_CHECK"
+
+[node name="LowerFloorCheck" type="CheckBox" parent="Root/Body/Inspector/InspectorBox/DeviceFields"]
+layout_mode = 2
+text = "LOWER_FLOOR_CHECK"
+
+[node name="DirectionalAntennaCheck" type="CheckBox" parent="Root/Body/Inspector/InspectorBox/DeviceFields"]
+layout_mode = 2
+text = "ANTENNA_CHECK"
+
+[node name="AntennaDirectionLabel" type="Label" parent="Root/Body/Inspector/InspectorBox/DeviceFields"]
+layout_mode = 2
+text = "ANTENNA_DIRECTION_LABEL"
+
+[node name="AntennaDirectionSpin" type="SpinBox" parent="Root/Body/Inspector/InspectorBox/DeviceFields"]
+layout_mode = 2
+min_value = 0.0
+max_value = 359.0
+step = 1.0
+value = 0.0
+
 [node name="SlotLabel" type="Label" parent="Root/Body/Inspector/InspectorBox/DeviceFields"]
 layout_mode = 2
 text = "SLOT_LABEL"

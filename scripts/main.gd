@@ -10,6 +10,13 @@ extends Control
 @onready var name_edit: LineEdit = $Root/Body/Inspector/InspectorBox/DeviceFields/NameEdit
 @onready var scale_spin: SpinBox = $Root/Body/Inspector/InspectorBox/DeviceFields/ScaleSpin
 @onready var lock_check: CheckBox = $Root/Body/Inspector/InspectorBox/DeviceFields/LockCheck
+@onready var location_label: Label = $Root/Body/Inspector/InspectorBox/DeviceFields/LocationLabel
+@onready var location_option: OptionButton = $Root/Body/Inspector/InspectorBox/DeviceFields/LocationOption
+@onready var upper_floor_check: CheckBox = $Root/Body/Inspector/InspectorBox/DeviceFields/UpperFloorCheck
+@onready var lower_floor_check: CheckBox = $Root/Body/Inspector/InspectorBox/DeviceFields/LowerFloorCheck
+@onready var antenna_check: CheckBox = $Root/Body/Inspector/InspectorBox/DeviceFields/DirectionalAntennaCheck
+@onready var antenna_direction_label: Label = $Root/Body/Inspector/InspectorBox/DeviceFields/AntennaDirectionLabel
+@onready var antenna_direction_spin: SpinBox = $Root/Body/Inspector/InspectorBox/DeviceFields/AntennaDirectionSpin
 @onready var slot_label: Label = $Root/Body/Inspector/InspectorBox/DeviceFields/SlotLabel
 @onready var slot_spin: SpinBox = $Root/Body/Inspector/InspectorBox/DeviceFields/SlotSpin
 @onready var uplink_fields: Control = $Root/Body/Inspector/InspectorBox/UplinkFields
@@ -37,6 +44,7 @@ var _name_edit_start_value := ""
 var _scale_start_value := 1.0
 var _slot_start_value := 0
 var _last_cable_type_id := -1
+var _antenna_direction_start_value := 0.0
 
 const PASTE_OFFSET := Vector2(30, 30)
 
@@ -63,6 +71,13 @@ func _ready() -> void:
 	scale_spin.get_line_edit().focus_entered.connect(_on_scale_focus_entered)
 	scale_spin.get_line_edit().focus_exited.connect(_on_scale_focus_exited)
 	lock_check.toggled.connect(_on_lock_toggled)
+	location_option.item_selected.connect(_on_location_selected)
+	upper_floor_check.toggled.connect(_on_upper_floor_toggled)
+	lower_floor_check.toggled.connect(_on_lower_floor_toggled)
+	antenna_check.toggled.connect(_on_antenna_toggled)
+	antenna_direction_spin.value_changed.connect(_on_antenna_direction_changed)
+	antenna_direction_spin.get_line_edit().focus_entered.connect(_on_antenna_direction_focus_entered)
+	antenna_direction_spin.get_line_edit().focus_exited.connect(_on_antenna_direction_focus_exited)
 	slot_spin.value_changed.connect(_on_slot_count_changed)
 	slot_spin.get_line_edit().focus_entered.connect(_on_slot_focus_entered)
 	slot_spin.get_line_edit().focus_exited.connect(_on_slot_focus_exited)
@@ -83,6 +98,13 @@ func _ready() -> void:
 	uplink_fields.visible = false
 	slot_label.visible = false
 	slot_spin.visible = false
+	location_label.visible = false
+	location_option.visible = false
+	upper_floor_check.visible = false
+	lower_floor_check.visible = false
+	antenna_check.visible = false
+	antenna_direction_label.visible = false
+	antenna_direction_spin.visible = false
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not (event is InputEventKey) or not event.pressed or event.echo:
@@ -168,12 +190,22 @@ func _apply_dynamic_translations() -> void:
 	cable_type_option.select(cable_type_option.get_item_index(pending_id))
 	if uplink_id != -1:
 		cable_type_spin.select(cable_type_spin.get_item_index(uplink_id))
+	var location_id: int = location_option.get_selected_id() if selected_device != null else -1
+	_populate_location_options(location_option)
+	if location_id != -1:
+		location_option.select(location_option.get_item_index(location_id))
 
 func _populate_cable_type_options(option: OptionButton) -> void:
 	option.clear()
 	option.add_item(tr("CABLE_COPPER"), UplinkData.CableType.COPPER)
 	option.add_item(tr("CABLE_FIBER_1G"), UplinkData.CableType.FIBER_1G)
 	option.add_item(tr("CABLE_FIBER_10G"), UplinkData.CableType.FIBER_10G)
+
+func _populate_location_options(option: OptionButton) -> void:
+	option.clear()
+	option.add_item(tr("LOCATION_HALL"), DeviceData.Location.HALL)
+	option.add_item(tr("LOCATION_OFFICE"), DeviceData.Location.OFFICE)
+	option.add_item(tr("LOCATION_OUTDOOR"), DeviceData.Location.OUTDOOR)
 
 func _on_load_map_pressed() -> void:
 	file_dialog.popup_centered_ratio(0.8)
@@ -363,8 +395,16 @@ func _on_device_selected(device: DeviceBase) -> void:
 	if device == null:
 		return
 	var is_rack: bool = device.data.type == "rack"
+	var is_ap: bool = device.data.type == "access_point"
 	slot_label.visible = is_rack
 	slot_spin.visible = is_rack
+	location_label.visible = is_ap
+	location_option.visible = is_ap
+	upper_floor_check.visible = is_ap
+	lower_floor_check.visible = is_ap
+	antenna_check.visible = is_ap
+	antenna_direction_label.visible = is_ap and device.data.has_directional_antenna
+	antenna_direction_spin.visible = is_ap and device.data.has_directional_antenna
 
 	_updating_inspector = true
 	name_edit.text = device.device_name
@@ -372,6 +412,12 @@ func _on_device_selected(device: DeviceBase) -> void:
 	lock_check.button_pressed = device.data.locked
 	if is_rack:
 		slot_spin.value = device.device_slot_count
+	if is_ap:
+		location_option.select(location_option.get_item_index(device.data.location))
+		upper_floor_check.button_pressed = device.data.on_upper_floor
+		lower_floor_check.button_pressed = device.data.on_lower_floor
+		antenna_check.button_pressed = device.data.has_directional_antenna
+		antenna_direction_spin.value = device.data.antenna_direction_deg
 	_updating_inspector = false
 
 func _on_uplink_selected(uplink: UplinkArrow) -> void:
@@ -526,6 +572,119 @@ func _apply_lock(device: DeviceBase, value: bool) -> void:
 	if device == selected_device:
 		_updating_inspector = true
 		lock_check.button_pressed = value
+		_updating_inspector = false
+
+func _on_location_selected(_index: int) -> void:
+	if _updating_inspector or selected_device == null:
+		return
+	var device := selected_device
+	var old_value: int = device.data.location
+	var new_value: int = location_option.get_selected_id()
+	if old_value == new_value:
+		return
+	map_area.push_undoable_action(
+		"Change location",
+		func(): _apply_location(device, new_value),
+		func(): _apply_location(device, old_value)
+	)
+
+func _apply_location(device: DeviceBase, value: int) -> void:
+	device.data.location = value as DeviceData.Location
+	device.queue_redraw()
+	if device == selected_device:
+		_updating_inspector = true
+		location_option.select(location_option.get_item_index(value))
+		_updating_inspector = false
+
+func _on_upper_floor_toggled(pressed: bool) -> void:
+	if _updating_inspector or selected_device == null:
+		return
+	var device := selected_device
+	var old_value: bool = not pressed
+	map_area.push_undoable_action(
+		"Toggle upper floor",
+		func(): _apply_upper_floor(device, pressed),
+		func(): _apply_upper_floor(device, old_value)
+	)
+
+func _apply_upper_floor(device: DeviceBase, value: bool) -> void:
+	device.data.on_upper_floor = value
+	device.queue_redraw()
+	if device == selected_device:
+		_updating_inspector = true
+		upper_floor_check.button_pressed = value
+		_updating_inspector = false
+
+func _on_lower_floor_toggled(pressed: bool) -> void:
+	if _updating_inspector or selected_device == null:
+		return
+	var device := selected_device
+	var old_value: bool = not pressed
+	map_area.push_undoable_action(
+		"Toggle lower floor",
+		func(): _apply_lower_floor(device, pressed),
+		func(): _apply_lower_floor(device, old_value)
+	)
+
+func _apply_lower_floor(device: DeviceBase, value: bool) -> void:
+	device.data.on_lower_floor = value
+	device.queue_redraw()
+	if device == selected_device:
+		_updating_inspector = true
+		lower_floor_check.button_pressed = value
+		_updating_inspector = false
+
+func _on_antenna_toggled(pressed: bool) -> void:
+	if _updating_inspector or selected_device == null:
+		return
+	var device := selected_device
+	var old_value: bool = not pressed
+	map_area.push_undoable_action(
+		"Toggle directional antenna",
+		func(): _apply_antenna(device, pressed),
+		func(): _apply_antenna(device, old_value)
+	)
+
+func _apply_antenna(device: DeviceBase, value: bool) -> void:
+	device.data.has_directional_antenna = value
+	device.queue_redraw()
+	if device == selected_device:
+		_updating_inspector = true
+		antenna_check.button_pressed = value
+		antenna_direction_label.visible = value
+		antenna_direction_spin.visible = value
+		_updating_inspector = false
+
+func _on_antenna_direction_changed(value: float) -> void:
+	if _updating_inspector or selected_device == null:
+		return
+	selected_device.data.antenna_direction_deg = value
+	selected_device.queue_redraw()
+
+func _on_antenna_direction_focus_entered() -> void:
+	if selected_device != null:
+		_antenna_direction_start_value = selected_device.data.antenna_direction_deg
+
+func _on_antenna_direction_focus_exited() -> void:
+	if selected_device == null:
+		return
+	var device := selected_device
+	var new_value: float = device.data.antenna_direction_deg
+	var old_value: float = _antenna_direction_start_value
+	if is_equal_approx(new_value, old_value):
+		return
+	map_area.push_undoable_action(
+		"Change antenna direction",
+		func(): _apply_antenna_direction(device, new_value),
+		func(): _apply_antenna_direction(device, old_value)
+	)
+
+func _apply_antenna_direction(device: DeviceBase, value: float) -> void:
+	device.data.antenna_direction_deg = value
+	device.queue_redraw()
+	if device == selected_device:
+		_updating_inspector = true
+		antenna_direction_spin.value = value
 		_updating_inspector = false
 
 func _on_slot_count_changed(value: float) -> void:
